@@ -2,7 +2,7 @@
 
 namespace CsvQueueProcessor.Models
 {
-    public class SignUpViewModel
+    public class RegisterViewModel
     {
         [Required]
         public string Username { get; set; }

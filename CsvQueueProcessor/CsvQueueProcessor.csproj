@@ -6,4 +6,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\css\login.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\login.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="33.0.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CsvQueueProcessor.Infrastructure\CsvQueueProcessor.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

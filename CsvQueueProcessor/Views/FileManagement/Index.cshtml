@@ -1,0 +1,94 @@
+﻿@using CsvQueueProcessor.Core.Entities
+@using static CsvQueueProcessor.Helper.Enums
+
+@model IEnumerable<FileProcessing>
+@{
+    ViewData["Title"] = "File Management";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/filemanagement.css">
+</head>
+<body>
+    <!-- Header Section with Logout Button -->
+    <div class="header">
+        <h1>File Management</h1>
+        <form action="/Account/Logout" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+
+    <!-- Tab Container -->
+    <div class="tab-container">
+        <div class="tabs">
+            <button class="tab-link active" onclick="openTab(event, 'processed-files')">Processed Files</button>
+            <button class="tab-link" onclick="openTab(event, 'upload-process')">Upload & Process</button>
+        </div>
+
+        <!-- Tab Content: Processed Files -->
+        <div id="processed-files" class="tab-content active">
+            <h2>Processed Files</h2>
+            <table class="file-table">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>Processed Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var status in Model)
+                    {
+                        <tr>
+                            <td>@status.FileName</td>
+                            <td>@status.ProcessedDate.Value.ToShortDateString()</td>
+                            <td>@((StatusCode)status.StatusCode)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tab Content: Upload & Process -->
+        <div id="upload-process" class="tab-content">
+            <h2>Upload and Process New Files</h2>
+            <form action="/FileManagement/UploadProducts" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file-upload">Select File</label>
+                    <input type="file" id="file-upload" name="file" class="form-control" required>
+                </div>
+                <button type="submit" class="upload-btn">Upload and Process</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openTab(event, tabId) {
+            // Get all tab content elements and hide them
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Get all tab links and remove the active class
+            const tabLinks = document.querySelectorAll('.tab-link');
+            tabLinks.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show the selected tab content
+            const selectedTabContent = document.getElementById(tabId);
+            selectedTabContent.classList.add('active');
+
+            // Add active class to the clicked tab link
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

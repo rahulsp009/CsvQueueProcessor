@@ -1,0 +1,40 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1 class="login-title">Welcome Back</h1>
+            <form action="/Account/Login" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="Username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="Password" class="form-control" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            <div class="login-footer">
+                <p>
+                    Don't have an account? <a href="/Account/Register">Sign up</a>
+                </p>
+                @* <a href="/Account/ForgotPassword">Forgot Password?</a> *@
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
