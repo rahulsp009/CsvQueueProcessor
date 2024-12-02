@@ -20,7 +20,14 @@ namespace CsvQueueProcessor.Infrastructure.Repositories
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 string sqlQuery = "INSERT INTO [User] (Username, Password, Email) VALUES (@Username, @Password, @Email); SELECT CAST(SCOPE_IDENTITY() as int)";
-                return await db.ExecuteScalarAsync<int>(sqlQuery, user);
+                try
+                {
+                    return await db.ExecuteScalarAsync<int>(sqlQuery, user);
+                }
+                catch (SqlException ex)
+                {
+                    throw;
+                }
             }
         }
 
@@ -29,7 +36,14 @@ namespace CsvQueueProcessor.Infrastructure.Repositories
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 string sqlQuery = "SELECT * FROM [User] WHERE Username = @Username AND Password = @Password";
-                return await db.QueryFirstOrDefaultAsync<User>(sqlQuery, new { Username = username, Password = password });
+                try
+                {
+                    return await db.QueryFirstOrDefaultAsync<User>(sqlQuery, new { Username = username, Password = password });
+                }
+                catch (SqlException ex)
+                {
+                    throw;
+                }
             }
         }
     }

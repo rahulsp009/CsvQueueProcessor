@@ -4,6 +4,7 @@ using CsvQueueProcessor.Core.Interfaces;
 using CsvQueueProcessor.Core.Services;
 using RabbitMQ.Client;
 using System.Globalization;
+using System.Threading.Tasks;
 using static CsvQueueProcessor.Helper.Enums;
 
 namespace CsvQueueProcessor.Helper
@@ -37,8 +38,7 @@ namespace CsvQueueProcessor.Helper
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     var products = csv.GetRecords<Product>();
-
-                    foreach (var product in products)
+                    await Parallel.ForEachAsync(products, async (product, cancellationToken) =>
                     {
                         try
                         {
@@ -53,7 +53,7 @@ namespace CsvQueueProcessor.Helper
                             // Log individual message processing error
                             Console.WriteLine($"Error sending message for product {product.Name}: {ex.Message}");
                         }
-                    }
+                    });
                 }
             }
             catch (Exception ex)

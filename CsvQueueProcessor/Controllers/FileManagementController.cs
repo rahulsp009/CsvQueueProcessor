@@ -37,7 +37,7 @@ namespace CsvQueueProcessor.Controllers
 
             await messageQueuePublisher.ProcessCsvAndSendToRabbitMq(filePath, _fileProcessingService);
 
-            return Ok("Products uploaded and sent to RabbitMQ.");
+            return RedirectToAction("Index");
         }
     }
 }

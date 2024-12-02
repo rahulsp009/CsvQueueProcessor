@@ -19,12 +19,26 @@ namespace CsvQueueProcessor.Core.Services
 
         public async Task<IEnumerable<FileProcessing>> GetAllFileProcessingStatuses()
         {
-            return await _fileProcessingRepository.GetAllFileProcessingStatuses();
+            try
+            {
+                return await _fileProcessingRepository.GetAllFileProcessingStatuses();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<int> InsertFileProcessingStatus(FileProcessing fileProcessing)
         {
-            return await _fileProcessingRepository.InsertFileProcessingStatus(fileProcessing);
+            try
+            {
+                return await _fileProcessingRepository.InsertFileProcessingStatus(fileProcessing);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

@@ -17,12 +17,26 @@ namespace CsvQueueProcessor.Core.Services
         }
         public async Task<int> AddUserAsync(User user)
         {
-           return await _userRepository.AddUserAsync(user);
+            try
+            {
+                return await _userRepository.AddUserAsync(user);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<User> GetUserByCredentialsAsync(string username, string password)
         {
-            return await _userRepository.GetUserByCredentialsAsync(username, password);
+            try
+            {
+                return await _userRepository.GetUserByCredentialsAsync(username, password);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
